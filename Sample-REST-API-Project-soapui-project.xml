@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="3b1b9a32-39a7-4cf7-ac5f-be683f9546ca" activeEnvironment="Default" name="REST Project 1" resourceRoot="" soapui-version="5.9.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService id="bf24d40d-62af-4f5f-8f3a-363de8a05e11" port="8089" path="/" host="armadana.local" name="REST MockService 1" docroot=""><con:settings/><con:properties/><con:restMockAction name="/login" method="POST" resourcePath="/login" id="801ca95f-d031-4ee4-b4a2-e05ba8f5f22f"><con:settings/><con:defaultResponse>Ok Response</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import groovy.json.JsonSlurper
+
+def jsonSlurper = new JsonSlurper()
+def holder = jsonSlurper.parseText(mockRequest.requestContent)
+
+def username = holder.username
+def password = holder.password
+def sum = username + password
+
+// validate
+if( sum.length() > 25 || sum.length() &lt; 10 || !username.startsWith("Login") || !password.endsWith( "123" ))
+ return "Invalid Login Fault"
+
+if( context.hasProperty( sum ))
+ return "Already Logged In Fault"
+
+// seems ok
+def sessionid = String.valueOf( Math.random() ).substring( 2 )
+
+context.setProperty( sum, sessionid )
+context.setProperty( sessionid, sum )
+
+requestContext.sessionid = sessionid
+return "Ok Response"
+</con:dispatchPath><con:response name="Ok Response" id="74b4c08a-d6bc-42a5-9d41-06b9ccbfbbbb" httpResponseStatus="201" mediaType="application/json"><con:settings/><con:responseContent>{
+  "sessionId" :"${sessionid}",
+  "name": "${name}"
+}</con:responseContent><con:header><con:name>mockresponse</con:name><con:value>true</con:value></con:header></con:response><con:response name="Invalid Login Fault" id="60e30c98-ae00-46d0-98b6-ce8f6ed98883" httpResponseStatus="401" mediaType="application/json"><con:settings/><con:responseContent/></con:response><con:response name="Already Logged In Fault" id="7d21f122-b360-48e3-ba43-016009d9f370" httpResponseStatus="409" mediaType="application/json"><con:settings/><con:responseContent/><con:header><con:name>Content-Lenght</con:name><con:value>0</con:value></con:header></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
