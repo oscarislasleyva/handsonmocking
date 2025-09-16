@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "c5e16c4c-cdf3-42fe-b6a3-4e594563638f",
+		"name": "Mocking Works",
+		"description": "Colección para probar los Mockservices del proyecto REST-API de SoapUI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7805483",
+		"_collection_link": "https://extremaba.postman.co/workspace/Mocking-Works~387ea7c9-a83c-4dba-bf47-c1045a548f8c/collection/7805483-c5e16c4c-cdf3-42fe-b6a3-4e594563638f?action=share&source=collection_link&creator=7805483"
+	},
+	"item": [
+		{
+			"name": "LogIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Login exitoso\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var sessionId = jsonData.sessionId",
+							"    console.log (\"la sesión es: \" + sessionId)",
+							"    pm.collectionVariables.set(\"sessionId\", sessionId);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"Logidn\",\n    \"password\" : \"Login123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{localhost}}/login",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LogOut",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "{{sessionId}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"Login\",\n    \"password\" : \"Login123\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/logout",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "localhost",
+			"value": ""
+		},
+		{
+			"key": "sessionId",
+			"value": ""
+		}
+	]
+}
