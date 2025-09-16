@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="3b1b9a32-39a7-4cf7-ac5f-be683f9546ca" activeEnvironment="Default" name="REST Project 1" resourceRoot="" soapui-version="5.9.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService id="bf24d40d-62af-4f5f-8f3a-363de8a05e11" port="8089" path="/" host="armadana.local" name="REST MockService 1" docroot=""><con:settings/><con:properties/><con:restMockAction name="/login" method="POST" resourcePath="/login" id="801ca95f-d031-4ee4-b4a2-e05ba8f5f22f"><con:settings/><con:defaultResponse>Ok Response</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import groovy.json.JsonSlurper
+<con:soapui-project id="3b1b9a32-39a7-4cf7-ac5f-be683f9546ca" activeEnvironment="Default" name="Sample REST API" resourceRoot="" soapui-version="5.9.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService id="bf24d40d-62af-4f5f-8f3a-363de8a05e11" port="8089" path="/" host="armadana.local" name="Mocking Works Sample" docroot=""><con:settings/><con:properties/><con:restMockAction name="/login" method="POST" resourcePath="/login" id="801ca95f-d031-4ee4-b4a2-e05ba8f5f22f"><con:settings/><con:defaultResponse>Ok Response</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import groovy.json.JsonSlurper
 
 def jsonSlurper = new JsonSlurper()
 def holder = jsonSlurper.parseText(mockRequest.requestContent)
@@ -22,8 +22,24 @@ context.setProperty( sum, sessionid )
 context.setProperty( sessionid, sum )
 
 requestContext.sessionid = sessionid
+log.info (sessionid)
 return "Ok Response"
 </con:dispatchPath><con:response name="Ok Response" id="74b4c08a-d6bc-42a5-9d41-06b9ccbfbbbb" httpResponseStatus="201" mediaType="application/json"><con:settings/><con:responseContent>{
-  "sessionId" :"${sessionid}",
-  "name": "${name}"
-}</con:responseContent><con:header><con:name>mockresponse</con:name><con:value>true</con:value></con:header></con:response><con:response name="Invalid Login Fault" id="60e30c98-ae00-46d0-98b6-ce8f6ed98883" httpResponseStatus="401" mediaType="application/json"><con:settings/><con:responseContent/></con:response><con:response name="Already Logged In Fault" id="7d21f122-b360-48e3-ba43-016009d9f370" httpResponseStatus="409" mediaType="application/json"><con:settings/><con:responseContent/><con:header><con:name>Content-Lenght</con:name><con:value>0</con:value></con:header></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+  "sessionId" :"${sessionid}"
+}</con:responseContent><con:header><con:name>mockresponse</con:name><con:value>true</con:value></con:header></con:response><con:response name="Invalid Login Fault" id="60e30c98-ae00-46d0-98b6-ce8f6ed98883" httpResponseStatus="401" mediaType="application/json"><con:settings/><con:responseContent/></con:response><con:response name="Already Logged In Fault" id="7d21f122-b360-48e3-ba43-016009d9f370" httpResponseStatus="409" mediaType="application/json"><con:settings/><con:responseContent/><con:header><con:name>Content-Lenght</con:name><con:value>0</con:value></con:header></con:response></con:restMockAction><con:restMockAction name="/logout" method="POST" resourcePath="/logout" id="3cca485d-2194-40ee-b7a7-1b3e90580f7d"><con:settings/><con:defaultResponse>Ok Response</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>import groovy.json.JsonSlurper
+
+def headers = mockRequest.requestHeaders
+
+def sessionid = headers["sessionId"]
+
+// check
+if( !context.hasProperty( sessionid ))
+ return "Invalid Session Id Fault"
+
+// logout
+context.removeProperty( context.getProperty( sessionid ))
+context.removeProperty( sessionid )
+requestContext.sessioninfo = "OK"
+
+return "Ok Response"
+</con:dispatchPath><con:response name="Ok Response" id="77425e20-f5d8-4aac-a2e5-4a0adabe6a8f" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent/></con:response><con:response name="Invalid Session Id Fault" id="877d3d8d-9dca-4df8-bec5-718fcdec5ada" httpResponseStatus="401" mediaType="application/json"><con:settings/><con:responseContent/></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
