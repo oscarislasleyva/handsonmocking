@@ -30,8 +30,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"packages": {},
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -40,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\" : \"Logidn\",\n    \"password\" : \"Login123\"\n}",
+					"raw": "{\n    \"username\" : \"Login\",\n    \"password\" : \"Login123\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,9 +51,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{localhost}}/login",
+					"raw": "{{baseUrl}}/login",
 					"host": [
-						"{{localhost}}"
+						"{{baseUrl}}"
 					],
 					"path": [
 						"login"
@@ -111,7 +114,7 @@
 	],
 	"variable": [
 		{
-			"key": "localhost",
+			"key": "baseUrl",
 			"value": ""
 		},
 		{
