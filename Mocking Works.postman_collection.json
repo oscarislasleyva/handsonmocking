@@ -18,7 +18,7 @@
 							"pm.test(\"Login exitoso\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    var sessionId = jsonData.sessionId",
-							"    console.log (\"la sesión es: \" + sessionId)",
+							"    console.log (\"la sesión creada es: \" + sessionId)",
 							"    pm.collectionVariables.set(\"sessionId\", sessionId);",
 							"});",
 							""
@@ -115,7 +115,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": ""
+			"value": "http://localhost:8080"
 		},
 		{
 			"key": "sessionId",
