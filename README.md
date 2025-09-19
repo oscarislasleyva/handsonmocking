@@ -11,7 +11,7 @@ También se incluye una colección de Postman para que puedas probar el mock ser
 *   **Mock Service RESTful**: Construido con SoapUI para simular un backend real.
 *   **Endpoints**:
     *   `POST /login`: Para autenticar un usuario y recibir una `sessionId`.
-    *   `POST /logout`: Para invalidar una `sessionId`.
+    *   `PUT /logout`: Para invalidar una `sessionId`.
 *   **Colección de Postman**: Peticiones preconfiguradas para interactuar con los endpoints del mock.
 
 ## Cómo Empezar
