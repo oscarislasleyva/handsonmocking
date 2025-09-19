@@ -64,23 +64,36 @@
 		},
 		{
 			"name": "LogOut",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"console.log (\"la sesión a cerrar es: \" + pm.collectionVariables.get(\"sessionId\"))"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "sessionId",
 						"value": "{{sessionId}}",
+						"description": "Número de sesión a Cerrar",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\" : \"Login\",\n    \"password\" : \"Login123\"\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "{{localhost}}/logout",
+					"raw": "{{baseUrl}}/logout",
 					"host": [
-						"{{localhost}}"
+						"{{baseUrl}}"
 					],
 					"path": [
 						"logout"
